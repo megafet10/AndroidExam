@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NewActivity</string>
+    <string name="login_text">Login</string>
+    <string name="username_text">User name:</string>
+    <string name="password_text">Password:</string>
+    <string name="attempt_text">Attempt:</string>
+    <string name="title_activity_list_view">ListViewActivity</string>
+
+</resources>
