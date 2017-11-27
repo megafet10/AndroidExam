@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ /* BORQS Software Solutions Pvt Ltd. CONFIDENTIAL
+ * Copyright (c) 2017 All rights reserved.
+ *
+ * The source code contained or described herein and all documents
+ * related to the source code ("Material") are owned by BORQS Software
+ * Solutions Pvt Ltd. No part of the Material may be used,copied,
+ * reproduced, modified, published, uploaded,posted, transmitted,
+ * distributed, or disclosed in any way without BORQS Software
+ * Solutions Pvt Ltd. prior written permission.
+ *
+ * No license under any patent, copyright, trade secret or other
+ * intellectual property right is granted to or conferred upon you
+ * by disclosure or delivery of the Materials, either expressly, by
+ * implication, inducement, estoppel or otherwise. Any license
+ * under such intellectual property rights must be express and
+ * approved by BORQS Software Solutions Pvt Ltd. in writing.
+ *
+ */
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll1"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    android:layout_gravity="bottom"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/emojis_tab"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/symbols_tab"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_puncuation_light" />
+
+        <ImageButton
+            android:id="@+id/emojis_tab_1_people"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_emoji_people_light" />
+
+        <ImageButton
+            android:id="@+id/emojis_tab_3_objects"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_emoji_objects_light" />
+
+        <ImageButton
+            android:id="@+id/emojis_tab_2_nature"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_emoji_nature_light" />
+
+        <ImageButton
+            android:id="@+id/emojis_tab_4_cars"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_emoji_places_light" />
+
+        <ImageButton
+            android:id="@+id/emojis_tab_5_punctuation"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_emoji_symbols_light" />
+
+        <ImageButton
+            android:id="@+id/emojis_emoticons"
+            android:layout_width="@dimen/emoji_symbol_key_width"
+            android:layout_height="@dimen/emoji_symbol_key_height"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_emoji_smiles_light"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/cyan" />
+
+    <com.borqs.ime.adapters.HorizontalPager
+        android:id="@+id/horizontal_pager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/emojis_window_height"
+        android:layout_gravity="bottom" >
+    </com.borqs.ime.adapters.HorizontalPager>
+</LinearLayout>

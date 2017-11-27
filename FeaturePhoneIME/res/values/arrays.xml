@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+/*
+ * BORQS Software Solutions Pvt Ltd. CONFIDENTIAL
+ * Copyright (c) 2017 All rights reserved.
+ *
+ * The source code contained or described herein and all documents
+ * related to the source code ("Material") are owned by BORQS Software
+ * Solutions Pvt Ltd. No part of the Material may be used,copied,
+ * reproduced, modified, published, uploaded,posted, transmitted,
+ * distributed, or disclosed in any way without BORQS Software
+ * Solutions Pvt Ltd. prior written permission.
+ *
+ * No license under any patent, copyright, trade secret or other
+ * intellectual property right is granted to or conferred upon you
+ * by disclosure or delivery of the Materials, either expressly, by
+ * implication, inducement, estoppel or otherwise. Any license
+ * under such intellectual property rights must be express and
+ * approved by BORQS Software Solutions Pvt Ltd. in writing.
+ *
+ */
+ -->
+
+<resources>
+    <string-array name="lang_array">
+        <item>Hindi</item>
+        <item>Assamese</item>
+        <item>Bengali</item>
+        <item>Gujarati</item>
+        <item>Marathi</item>
+        <item>Telugu</item>
+        <item>Tamil</item>
+        <item>Malayalam</item>
+        <item>Punjabi</item>
+        <item>Odia</item>
+        <item>Kannada</item>
+        <item>Urdu</item>
+        <item>Kashmiri</item>
+        <item>English</item>
+        <item>Nepali</item>
+        <item>Konkani</item>
+        <item>Maithili</item>
+        <item>Dogri</item>
+        <item>Sindhi</item>
+        <item>Sanskrit</item>
+        <item>Manipuri</item>
+        <item>Bodo</item>
+        <item>Santali</item>
+    </string-array>
+
+    <string-array name="localed_codes_array">
+        <item>hi_IN</item>
+        <item>as_IN</item>
+        <item>bn_IN</item>
+        <item>gu_IN</item>
+        <item>mr_IN</item>
+        <item>te_IN</item>
+        <item>ta_IN</item>
+        <item>ml_IN</item>
+        <item>pa_IN</item>
+        <item>or_IN</item>
+        <item>kn_IN</item>
+        <item>ur_IN</item>
+        <item>ks_IN</item>
+        <item>en_IN</item>
+        <item>ne_NP</item>
+        <item>kok_IN</item>
+        <item>mai_IN</item>
+        <item>doi_IN</item>
+        <item>sd_IN</item>
+        <item>sa_IN</item>
+        <item>mni_IN</item>
+        <item>brx_IN</item>
+        <item>sat_IN</item>
+    </string-array>
+</resources>
