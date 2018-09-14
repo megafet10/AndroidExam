@@ -1,11 +1,8 @@
 /**
- * Copyright 2016 VTSmart - Viettel Group. All rights reserved.
- * VIETTEL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- *
- *
+
  * Brief: AES 256 crypto implementation, using openssl lib
  *
- * author: anhnh56
+ * author:
  * created:
  * history:
  */

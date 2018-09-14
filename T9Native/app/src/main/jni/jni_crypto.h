@@ -1,11 +1,8 @@
 /**
- * Copyright 2016 VTSmart - Viettel Group. All rights reserved.
- * VIETTEL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- *
  *
  * Brief: crypto abstract class for jni
  *
- * author: anhnh56
+ * author:
  * created:
  * history:
  */
