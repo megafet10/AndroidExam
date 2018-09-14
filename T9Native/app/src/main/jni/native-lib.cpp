@@ -16,6 +16,11 @@ JNIEXPORT jint JNICALL Java_com_example_minhbq_t9native_NativeUtil_testAESJNI(
         JNIEnv *env,
         jobject obj)
 {
+    JniMsgCtrl* msgCtrl = JniMsgCtrl::getInstance();
+    char* content;
+    int len;
+
+    msgCtrl->testAES(content, len);
     return 0;
 }
 
@@ -50,7 +55,7 @@ static void initGlobalJavaEnvironment(JNIEnv* env, jobject thiz)
     jclass cls = env->GetObjectClass(thiz);
     s_activity_obj = env->NewGlobalRef(thiz);
 
-    s_method_addlogger_id  = env->GetMethodID(cls, "onAddLogToJava", "(Ljava/lang/String;Ljava/lang/String;) V" );
+    s_method_addlogger_id  = env->GetMethodID(cls, "onAddLogToJava", "(Ljava/lang/String;Ljava/lang/String;)V" );
 
 
     LOG_TRACE_FUNC_END;

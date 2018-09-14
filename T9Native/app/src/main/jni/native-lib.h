@@ -11,6 +11,7 @@
 #include "jni_config.h"
 #include "jni_log.h"
 #include "jni_err.h"
+#include "jni_msg_ctrl.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,6 @@
 package com.example.minhbq.t9native;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import java.util.Timer;
@@ -9,30 +10,76 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class NativeUtil {
     public static NativeUtil instance = null;
+    private Context mContext;
 
     private JniReqHandleThread threadProcess = null;
     private JniReqHandleThread threadJniRequest = null;
 
-    private boolean isInitJniUtil = false;
+    private boolean initJniUtil = false;
 
+    public static void setInstance(NativeUtil instance) {
+        NativeUtil.instance = instance;
+    }
+    public static NativeUtil getInstance(Context context) {
+        if (instance == null) {
+            instance = new NativeUtil(context);
+        }
+        return instance;
+    }
 
-    public NativeUtil() {
+    public boolean isInitJniUtil() {
+        return initJniUtil;
+    }
 
+    public void setInitJniUtil(boolean init) {
+        initJniUtil = init;
+    }
+
+    public NativeUtil(Context context) {
+
+        mContext = context;
         threadProcess = new JniReqHandleThread();
         threadJniRequest = new JniReqHandleThread();
 
     }
 
-    public static NativeUtil getInstance() {
-        if (instance == null) {
-            instance = new NativeUtil();
-        }
-        return instance;
+
+//Get the value from JNI immediately
+    public String getTextFromJNI() { return stringFromJNI();}
+
+    //Send command to JNI
+    public int TestAESJni () {
+        threadProcess.addItem(new JniReq(null, new JniReqHandle() {
+            @Override
+            public boolean handle(Object data) {
+                testAESJNI();
+                return true;
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+        }, "Test AES"));
+
+        return 0;
     }
 
+    public int TestSHAJni () {
+        threadProcess.addItem(new JniReq(null, new JniReqHandle() {
+            @Override
+            public boolean handle(Object data) {
+                testSHAJNI();
+                return true;
+            }
 
-    public String getTextFromJNI() {
-        return stringFromJNI();
+            @Override
+            public void onStop() {
+
+            }
+        }, "Test SHA"));
+
+        return 0;
     }
 
     public void initLibJNIUtil () {
@@ -40,7 +87,7 @@ public class NativeUtil {
             @Override
             public boolean handle(Object data) {
                 initLibJNI();
-                isInitJniUtil = true;
+                initJniUtil = true;
                 return true;
             }
 
@@ -84,7 +131,7 @@ public class NativeUtil {
         threadJniRequest.addItem(new JniReq(null, new JniReqHandle() {
             @Override
             public boolean handle(Object data) {
-//                DebugConfig.LOGH(TAG, tag + ":" + log , true);
+                DebugConfig.LOGH(tag, tag + ":" + log , true);
                 return true;
             }
 
@@ -143,7 +190,7 @@ public class NativeUtil {
             boolean shouldStop = false;
             while(!isStop)
             {
-//                DebugConfig.LOG("thread JniUtil is running.....");
+                DebugConfig.LOG("thread JniUtil is running.....");
 
 
                 try {

@@ -12,7 +12,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         TextView textView = findViewById(R.id.textId);
-        NativeUtil nativeUtil = NativeUtil.getInstance();
+        NativeUtil nativeUtil = NativeUtil.getInstance(this);
+
+        nativeUtil.initLibJNIUtil();
         textView.setText(nativeUtil.getTextFromJNI());
     }
 }

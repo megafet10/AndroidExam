@@ -41,5 +41,6 @@ LOCAL_SRC_FILES += jni_crypto.cpp
 LOCAL_SRC_FILES += jni_crypto_aes.cpp
 LOCAL_SRC_FILES += jni_log.cpp
 LOCAL_SRC_FILES += jni_std.cpp
+LOCAL_SRC_FILES += jni_msg_ctrl.cpp
 
 include $(BUILD_SHARED_LIBRARY)
