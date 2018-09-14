@@ -48,7 +48,7 @@ public class NativeUtil {
     public String getTextFromJNI() { return stringFromJNI();}
 
     //Send command to JNI
-    public int TestAESJni () {
+    public int RunAESJni () {
         threadProcess.addItem(new JniReq(null, new JniReqHandle() {
             @Override
             public boolean handle(Object data) {
@@ -132,6 +132,7 @@ public class NativeUtil {
             @Override
             public boolean handle(Object data) {
                 DebugConfig.LOGH(tag, tag + ":" + log , true);
+                MainActivity.updateTextOnScreen(tag + log);
                 return true;
             }
 
@@ -192,7 +193,6 @@ public class NativeUtil {
             {
                 DebugConfig.LOG("thread JniUtil is running.....");
 
-
                 try {
 //                    DebugConfig.LOG("queue.take....");
                     JniReq item = queue.take();
@@ -206,7 +206,6 @@ public class NativeUtil {
                 }finally {
 
                 }
-
             }
 
             //free all data hear:
@@ -219,7 +218,6 @@ public class NativeUtil {
             return queue.offer(req);
         }
         public void stopIt(){
-//            boolean addres = false;
             isStop = true;
             while (!queue.offer(new JniReq(null, null, ""))) //dummy request
             {
@@ -227,10 +225,5 @@ public class NativeUtil {
             }
 
         }
-
-
-
     }
-
-
 }

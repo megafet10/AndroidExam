@@ -56,7 +56,6 @@ JniCryptoAES::~JniCryptoAES()
  */
 void JniCryptoAES::construct()
 {
-//    LOG_TRACE_FUNC;
 //	/* Initialise the library */
 	ERR_load_crypto_strings();
 }

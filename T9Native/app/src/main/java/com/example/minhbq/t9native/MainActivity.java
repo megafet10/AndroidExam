@@ -6,15 +6,29 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+    static public TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView= findViewById(R.id.textId);
 
-        TextView textView = findViewById(R.id.textId);
         NativeUtil nativeUtil = NativeUtil.getInstance(this);
 
         nativeUtil.initLibJNIUtil();
-        textView.setText(nativeUtil.getTextFromJNI());
+        updateTextOnScreen(nativeUtil.getTextFromJNI());
+        try {
+           // for (int i =0; i <5; i++) {
+                Thread.sleep(2000);
+                nativeUtil.RunAESJni();
+           // }
+        } catch (Exception e) {
+
+        }
+    }
+
+    static public void updateTextOnScreen(String content) {
+        textView.setText(content);
     }
 }

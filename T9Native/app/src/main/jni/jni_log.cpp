@@ -6,7 +6,7 @@
 #include "jni_std.h"
 #include "native-lib.h"
 #define THIS_LOG_TAG "jni"
-
+#define THIS_FILE	    "jni_log.c"
 
 /**
  * callback to add log to logger....

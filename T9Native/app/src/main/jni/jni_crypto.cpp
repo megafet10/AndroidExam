@@ -95,7 +95,6 @@ int JniCrypto::sha256(char* ibuf, int length, char* outbuf, int outSize)
 int JniCrypto::sha256KeySize()
 {
 	return SHA256_DIGEST_LENGTH;
-//	return 256;
 }
 
 /**
@@ -315,7 +314,7 @@ int JniCrypto::base64Decode(char* b64message, int len, char** buffer, int* oleng
  * CALLER must FREE data returned by this function (i.e delete[] buffer)
  * @param buffer, length: input data to be encode base64 format
  * @param b64text, olength: output data in base 64 format.
- *										 Buffer will be allocated by this function, so CALLER must FREE it after using (i.e delete[] buffer)
+ * Buffer will be allocated by this function, so CALLER must FREE it after using (i.e delete[] buffer)
  * @return ERR_NONE when success
  */
 int JniCrypto::base64Encode(const char* buffer, int length, char** b64text, int* olength)

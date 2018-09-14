@@ -33,7 +33,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := crypto-util
 #LOCAL_SHARED_LIBRARIES := openssl opencrypto
 LOCAL_STATIC_LIBRARIES:= openssl_static opencrypto_static
-LOCAL_CFLAGS    := -Werror  -frtti -Wno-write-strings $(JNI_CFLAGS) -DLOG_LEVEL_HIG
+LOCAL_CFLAGS    := -Werror  -frtti -Wno-write-strings $(JNI_CFLAGS) -DLOG_LEVEL_LOW
 LOCAL_LDLIBS    := -llog
 
 LOCAL_SRC_FILES := native-lib.cpp

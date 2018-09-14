@@ -1,5 +1,5 @@
 #include <native-lib.h>
-
+#define THIS_FILE	    "native-lib.c"
 // java VM
 static JavaVM* s_javaVM = NULL;
 static jobject s_activity_obj; // class obj of java function
@@ -17,8 +17,8 @@ JNIEXPORT jint JNICALL Java_com_example_minhbq_t9native_NativeUtil_testAESJNI(
         jobject obj)
 {
     JniMsgCtrl* msgCtrl = JniMsgCtrl::getInstance();
-    char* content;
-    int len;
+    char* content= "Hello";
+    int len = strlen(content);
 
     msgCtrl->testAES(content, len);
     return 0;
@@ -69,9 +69,9 @@ void callToJavaAddLogger(const char* tag, int tag_len, const char* log, int len)
     jint status = JNI_OK;
     jstring logString = NULL;
     jstring logTagString = NULL;
-    LOG_TRACE_FUNC_BEGIN;
-
-    LOG_TRACE("add to logger %s", log);
+//    LOG_TRACE_FUNC_BEGIN;
+//
+//    LOG_TRACE("add to logger %s", log);
 
     int getEnvStat = s_javaVM->GetEnv((void **)&env, JNI_VERSION_1_6);
     if (getEnvStat == JNI_EDETACHED) {
@@ -121,6 +121,6 @@ void callToJavaAddLogger(const char* tag, int tag_len, const char* log, int len)
 
     FAILED:
 
-    LOG_TRACE_FUNC_END;
+//    LOG_TRACE_FUNC_END;
 
 }
