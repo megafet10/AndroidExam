@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.minhbq.t9native"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+        }
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+
+//    sourceSets {
+//
+//        main {
+//            java.srcDirs = ['src/main/java']
+//            jni.srcDirs = [] // This prevents the auto generation of Android.mk
+//            //jniLibs.srcDir 'src/main/jni/lib'
+//            jniLibs.srcDirs = ['src/main/libs']
+//            // This is not necessary unless you have precompiled libraries in your project.
+////            res.srcDirs = ['src/main/res']
+//            aidl.srcDirs = ['src/main/aidl', 'src/main/aidl/']
+//
+////            manifest.srcFile "src/vipphone/AndroidManifest.xml"
+//        }
+//    }
+
+//    task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
+//        def ndkDir = android.ndkDirectory
+//        String osName = System.getProperty("os.name").toLowerCase();
+//        if (osName.contains("windows")) {
+//            commandLine "$ndkDir/ndk-build.cmd",
+//                    '-C', file('src/main/jni').absolutePath,
+//                    '-j', Runtime.runtime.availableProcessors(),
+//                    'all',
+//                    'NDK_DEBUG=1'
+//        } else {
+//            commandLine "$ndkDir/ndk-build",
+//                    '-C', file('src/main/jni').absolutePath,
+//                    '-j', Runtime.runtime.availableProcessors(),
+//                    'all',
+//                    'NDK_DEBUG=1'
+//        }
+//    }
+//
+//    task cleanNative(type: Exec, description: 'Clean JNI object files') {
+//        def ndkDir = android.ndkDirectory
+//        String osName = System.getProperty("os.name").toLowerCase();
+//        if (osName.contains("windows")) {
+//            commandLine "$ndkDir/ndk-build.cmd",
+//                    '-C', file('src/main/jni').absolutePath,
+//                    'clean'
+//        } else {
+//            commandLine "$ndkDir/ndk-build",
+//                    '-C', file('src/main/jni').absolutePath,
+//                    'clean'
+//        }
+//    }
+//
+//    clean.dependsOn 'cleanNative'
+//
+//    tasks.withType(JavaCompile) {
+//            //lock build jni
+//        compileTask -> compileTask.dependsOn buildNative
+//    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
