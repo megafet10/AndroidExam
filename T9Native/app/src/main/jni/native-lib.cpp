@@ -8,7 +8,9 @@ JNIEXPORT jstring JNICALL Java_com_example_minhbq_t9native_NativeUtil_stringFrom
         JNIEnv *env,
         jobject obj)
 {
-    return env->NewStringUTF("hello from MinhBQ");
+    LOG_TRACE_FUNC;
+    char* hello = "hello from MinhBQ";
+    return env->NewStringUTF(hello);
 }
 
 
@@ -121,6 +123,6 @@ void callToJavaAddLogger(const char* tag, int tag_len, const char* log, int len)
 
     FAILED:
 
-//    LOG_TRACE_FUNC_END;
+    LOG_TRACE_FUNC_END;
 
 }

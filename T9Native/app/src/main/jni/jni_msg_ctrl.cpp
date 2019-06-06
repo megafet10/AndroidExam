@@ -4,6 +4,7 @@
 
 #include "jni_msg_ctrl.h"
 #include "native-lib.h"
+#include <sys/time.h>
 
 #define THIS_FILE	    "jni_msg_ctrl.c"
 /////////////////////////////////// GLOBAL VARIABLE ///////////////////////////////////////////////
@@ -55,6 +56,9 @@ void JniMsgCtrl::testAES(char *content, int contentLen) {
 
     int iv_len = JniCrypto::sha256KeySize();
     char *iv = new char[iv_len + 1];
+//    struct timeval te;
+//    gettimeofday(&te, NULL);
+
     JniCrypto::sha256(fake_iv, strlen(fake_iv), iv, iv_len);
     iv[iv_len] = 0;
 

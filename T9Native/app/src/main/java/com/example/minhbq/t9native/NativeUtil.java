@@ -9,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class NativeUtil {
-    public static NativeUtil instance = null;
+    private static NativeUtil instance = null;
     private Context mContext;
 
     private JniReqHandleThread threadProcess = null;
@@ -17,9 +17,6 @@ public class NativeUtil {
 
     private boolean initJniUtil = false;
 
-    public static void setInstance(NativeUtil instance) {
-        NativeUtil.instance = instance;
-    }
     public static NativeUtil getInstance(Context context) {
         if (instance == null) {
             instance = new NativeUtil(context);
@@ -38,8 +35,8 @@ public class NativeUtil {
     public NativeUtil(Context context) {
 
         mContext = context;
-        threadProcess = new JniReqHandleThread();
-        threadJniRequest = new JniReqHandleThread();
+        threadProcess = new JniReqHandleThread();   //new thread to handle sending request to JNI
+        threadJniRequest = new JniReqHandleThread(); //new thread to handle receiving request from JNI
 
     }
 
@@ -132,7 +129,7 @@ public class NativeUtil {
             @Override
             public boolean handle(Object data) {
                 DebugConfig.LOGH(tag, tag + ":" + log , true);
-                MainActivity.updateTextOnScreen(tag + log);
+                MainActivity.getInstance().updateTextOnScreen(tag + log);
                 return true;
             }
 

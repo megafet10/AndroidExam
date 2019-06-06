@@ -9,9 +9,6 @@
 
 #include "jni_crypto_aes.h"
 
-#ifdef AES_USE_DIRECT_AES
-#include <aes.h>
-#endif //AES_USE_DIRECT_AES
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// DEFINITION ////////////////////////////////////////////////////
 #define THIS_FILE	    "jni_crypto_aes.c"
@@ -85,22 +82,22 @@ int JniCryptoAES::encrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 	LOG_TRACE_CRYPTO("EVP_EncryptInit_ex");
 #ifdef DEBUG_LOG_CRYPTO
 	if (key != NULL) {
-		LOG_TRACE_CRYPTO("MMDS AES key size %d", keyLen);
+		LOG_TRACE_CRYPTO("AES key size %d", keyLen);
 
-		dumpBuff2Hex("MMDS AES key ", (unsigned char *) key, keyLen);
+		dumpBuff2Hex("AES key ", (unsigned char *) key, keyLen);
 	}
 
 	if (iv != NULL) {
-		LOG_TRACE_CRYPTO("MMDS AES key sv, size %d", ivLen);
+		LOG_TRACE_CRYPTO("AES key sv, size %d", ivLen);
 
-		dumpBuff2Hex("MMDS AES key sv ", (unsigned char *) iv, ivLen);
+		dumpBuff2Hex("AES key sv ", (unsigned char *) iv, ivLen);
 	}
 
 
 	if (data != NULL) {
-		LOG_TRACE_CRYPTO("MMDS AES data, size %d", size);
+		LOG_TRACE_CRYPTO("AES data, size %d", size);
 
-		dumpBuff2Hex("MMDS AES data ", (unsigned char *) data, size);
+		dumpBuff2Hex("AES data ", (unsigned char *) data, size);
 	}
 #endif //DEBUG_LOG_CRYPTO
 
@@ -131,29 +128,6 @@ int JniCryptoAES::encrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 		 */
 		if (mode == AES_OFB)
 		{
-#ifdef AES_USE_DIRECT_AES
-			aes_init();
-			aes_encrypt_ctx cx[1];
-			aes_encrypt_key((const unsigned char*)key, keyLen, cx);
-
-			unsigned char* p = (unsigned char *)odata;
-            int outlen = 16;
-			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
-			LOG_TRACE_CRYPTO("MMDS AES OFB : encrypt with OFB, gladman, loop time %d data size %d", loop, size);
-			for(int i = 0; (i < loop) && (((int)p - (int)odata) < maxSize - 16); i++) {
-                aes_ofb_crypt((const unsigned char*)data, p, outlen, (unsigned char*)iv, cx);
-                p += outlen;
-//				if(i == 0)
-//				dumpBuff2Hex("MMDS AES OFB : encrypt data first time ", (unsigned char*)odata,(int)outlen);
-            }
-
-            ciphertext_len = (int)p - (int)odata;
-#ifdef DEBUG_LOG_CRYPTO
-			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
-			dumpBuff2Hex("MMDS AES OFB : encrypt data ", (unsigned char*)odata, ciphertext_len/2);
-#endif //DEBUG_LOG_CRYPTO
-
-#else //AES_USE_DIRECT_AES
 			unsigned char* p = (unsigned char *)odata;
             int outlen = 0;
 			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
@@ -183,7 +157,6 @@ int JniCryptoAES::encrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
 			dumpBuff2Hex("encrypt data ", (unsigned char*)odata, ciphertext_len/2);
 #endif //DEBUG_LOG_CRYPTO
-#endif //AES_USE_DIRECT_AES
 		}
         else if (mode == AES_CFB_8) {
             unsigned char* p = (unsigned char *)odata;
@@ -240,9 +213,9 @@ int JniCryptoAES::encrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 #ifdef DEBUG_LOG_CRYPTO
 		LOG_TRACE("Encrypt ok, len %d", ciphertext_len);
         if (odata != NULL) {
-            LOG_TRACE_CRYPTO("MMDS AES out data, size %d", size);
+            LOG_TRACE_CRYPTO("AES out data, size %d", size);
 
-            DUMP_BUFFER_SUB("MMDS AES out data ", (unsigned char *) odata, 16);
+            DUMP_BUFFER_SUB("AES out data ", (unsigned char *) odata, 16);
         }
 #endif // DEBUG_LOG_CRYPTO
 
@@ -308,22 +281,22 @@ int JniCryptoAES::decrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 
 #ifdef DEBUG_LOG_CRYPTO
     if (key != NULL) {
-        LOG_TRACE_CRYPTO("MMDS AES key size %d", keyLen);
+        LOG_TRACE_CRYPTO("AES key size %d", keyLen);
 
-        dumpBuff2Hex("MMDS AES key ", (unsigned char *) key, keyLen);
+        dumpBuff2Hex("AES key ", (unsigned char *) key, keyLen);
     }
 
     if (iv != NULL) {
-        LOG_TRACE_CRYPTO("MMDS key sv, size %d", ivLen);
+        LOG_TRACE_CRYPTO("key sv, size %d", ivLen);
 
-        dumpBuff2Hex("MMDS AES key sv ", (unsigned char *) iv, ivLen);
+        dumpBuff2Hex("AES key sv ", (unsigned char *) iv, ivLen);
     }
 
 
     if (data != NULL) {
-        LOG_TRACE_CRYPTO("MMDS AES data, size %d", size);
+        LOG_TRACE_CRYPTO("AES data, size %d", size);
 
-        dumpBuff2Hex("MMDS AES data ", (unsigned char *) data, size);
+        dumpBuff2Hex("AES data ", (unsigned char *) data, size);
     }
 #endif //DEBUG_LOG_CRYPTO
 
@@ -335,27 +308,6 @@ int JniCryptoAES::decrypt(char* iv, int ivLen, char* key, int keyLen, char* data
          */
 		if (mode == AES_OFB)
 		{
-#ifdef AES_USE_DIRECT_AES
-			aes_init();
-			aes_encrypt_ctx cx[1];
-			aes_encrypt_key((const unsigned char*)key, keyLen, cx);
-
-			unsigned char* p = (unsigned char *)odata;
-			int outlen = 16;
-			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
-			LOG_TRACE_CRYPTO("decrypt with OFB, gladman, loop time %d data size %d", loop, size);
-			for(int i = 0; (i < loop) && (((int)p - (int)odata) < maxSize - 16); i++) {
-				aes_ofb_decrypt((const unsigned char*)data, p, outlen, (unsigned char*)iv, cx);
-				p += outlen;
-			}
-
-			ciphertext_len = (int)p - (int)odata;
-#ifdef DEBUG_LOG_CRYPTO
-			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
-			dumpBuff2Hex("decrypt data ", (unsigned char*)odata, ciphertext_len/2);
-#endif //DEBUG_LOG_CRYPTO
-
-#else //AES_USE_DIRECT_AES
 			unsigned char* p = (unsigned char *)odata;
             int outlen = 0;
 			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
@@ -385,7 +337,6 @@ int JniCryptoAES::decrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
 			dumpBuff2Hex("encrypt data ", (unsigned char*)odata, ciphertext_len/2);
 #endif //DEBUG_LOG_CRYPTO
-#endif //AES_USE_DIRECT_AES
 		}
 		else if (mode == AES_CFB_8) {
             unsigned char* p = (unsigned char *)odata;
@@ -447,9 +398,9 @@ int JniCryptoAES::decrypt(char* iv, int ivLen, char* key, int keyLen, char* data
 #ifdef DEBUG_LOG_CRYPTO
 		LOG_TRACE_CRYPTO("decrypt ok, len %d", ciphertext_len);
         if (odata != NULL) {
-            LOG_TRACE_CRYPTO("MMDS AES out data, size %d", size);
+            LOG_TRACE_CRYPTO("AES out data, size %d", size);
 
-            DUMP_BUFFER_SUB("MMDS AES out data ", (unsigned char *) odata, 16);
+            DUMP_BUFFER_SUB("AES out data ", (unsigned char *) odata, 16);
         }
 #endif //DEBUG_LOG_CRYPTO
 		goto EXIT;
@@ -491,21 +442,21 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 	LOG_TRACE_CRYPTO("EVP_EncryptInit_ex");
 #ifdef DEBUG_LOG_CRYPTO
 	if (key != NULL) {
-		LOG_TRACE_CRYPTO("MMDS AES  key size %d", keyLen);
-		dumpBuff2Hex("MMDS AES KEY FOR THIS IM (SHA256(SECRET KEY)) ", (unsigned char *) key, keyLen);
+		LOG_TRACE_CRYPTO("AES  key size %d", keyLen);
+		dumpBuff2Hex("AES KEY FOR THIS IM (SHA256(SECRET KEY)) ", (unsigned char *) key, keyLen);
 	}
 
 	if (iv != NULL) {
-		LOG_TRACE_CRYPTO("MMDS AES  IM IV len, size %d", ivLen);
+		LOG_TRACE_CRYPTO("AES  IM IV len, size %d", ivLen);
 
-		dumpBuff2Hex("MMDS AES IM IV FOR THIS IM ", (unsigned char *) iv, ivLen);
+		dumpBuff2Hex("AES IM IV FOR THIS IM ", (unsigned char *) iv, ivLen);
 	}
 
 
 	if (data != NULL) {
-		LOG_TRACE_CRYPTO("MMDS AES IM DATA size (bytes - include CR and LF) %d", size);
+		LOG_TRACE_CRYPTO("AES IM DATA size (bytes - include CR and LF) %d", size);
 
-		dumpBuff2Hex("MMDS AES IM DATA ", (unsigned char *) data, size);
+		dumpBuff2Hex("AES IM DATA ", (unsigned char *) data, size);
 	}
 #endif //DEBUG_LOG_CRYPTO
 
@@ -544,29 +495,6 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 		 */
 		if (mode == AES_OFB)
 		{
-#ifdef AES_USE_DIRECT_AES
-			aes_init();
-			aes_encrypt_ctx cx[1];
-			aes_encrypt_key((const unsigned char*)key, keyLen, cx);
-
-			unsigned char* p = (unsigned char *)odata;
-			int outlen = 16;
-			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
-			LOG_TRACE_CRYPTO("MMDS AES OFB : encrypt with OFB, gladman, loop time %d data size %d", loop, size);
-			for(int i = 0; (i < loop) && (((int)p - (int)odata) < maxSize - 16); i++) {
-				aes_ofb_crypt((const unsigned char*)data, p, outlen, (unsigned char*)iv, cx);
-				p += outlen;
-//				if(i == 0)
-//				dumpBuff2Hex("MMDS AES OFB : encrypt data first time ", (unsigned char*)odata,(int)outlen);
-			}
-
-			ciphertext_len = (int)p - (int)odata;
-#ifdef DEBUG_LOG_CRYPTO
-			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
-			dumpBuff2Hex("MMDS AES OFB : encrypt data ", (unsigned char*)odata, ciphertext_len/2);
-#endif //DEBUG_LOG_CRYPTO
-
-#else //AES_USE_DIRECT_AES
 			unsigned char* p = (unsigned char *)odata;
             int outlen = 0;
 			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
@@ -596,7 +524,6 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
 			dumpBuff2Hex("encrypt data ", (unsigned char*)odata, ciphertext_len/2);
 #endif //DEBUG_LOG_CRYPTO
-#endif //AES_USE_DIRECT_AES
 		}
 		else if (mode == AES_CFB_8) {
 			unsigned char* p = (unsigned char *)odata;
@@ -636,7 +563,7 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 			padding_data[padding_data_len] = 0;
 #ifdef DEBUG_LOG_CRYPTO
 			LOG_TRACE_CRYPTO("padding_data_len  %d", padding_data_len);
-			dumpBuff2Hex("MMDS IM DATA USING FOR PADDING (SHA256(IV)) ", (unsigned char*)padding_data, padding_data_len);
+			dumpBuff2Hex("IM DATA USING FOR PADDING (SHA256(IV)) ", (unsigned char*)padding_data, padding_data_len);
 #endif //DEBUG_LOG_CRYPTO
 
 			//calculate bit to padding
@@ -653,9 +580,9 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 				new_size_data = size + bit_need_padding;
 				new_data = new char[new_size_data + 1];
 				memcpy((unsigned char*)new_data,(unsigned char*)data,size);
-//				dumpBuff2Hex("MMDS padding_data memcpy data", (unsigned char*)new_data, size);
+//				dumpBuff2Hex("padding_data memcpy data", (unsigned char*)new_data, size);
 				memcpy((unsigned char*)new_data + size, (unsigned char*)padding_data,bit_need_padding);
-//				dumpBuff2Hex("MMDS IM DATA AFTER PADDING ", (unsigned char*)new_data, new_size_data);
+//				dumpBuff2Hex("IM DATA AFTER PADDING ", (unsigned char*)new_data, new_size_data);
 				new_data[new_size_data]='\0';
 				if(NULL != padding_data)
 					delete []padding_data;
@@ -672,7 +599,7 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 				LOG_TRACE_CRYPTO("EVP_EncryptUpdate len had manual padding  %d", len);
 
 			} else { //no need to padding
-				LOGE("MMDS IM NO NEED TO PADDING");
+				LOGE("IM NO NEED TO PADDING");
 
 
 				LOG_TRACE_CRYPTO("data size %d ", size);
@@ -691,7 +618,7 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 			ciphertext_len = len;
 #ifdef DEBUG_LOG_CRYPTO
 			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
-//			dumpBuff2Hex("MMDS AES OFB : encrypt data ", (unsigned char*)odata, ciphertext_len);
+//			dumpBuff2Hex("AES OFB : encrypt data ", (unsigned char*)odata, ciphertext_len);
 #endif //DEBUG_LOG_CRYPTO
 
 
@@ -717,7 +644,7 @@ int JniCryptoAES::encryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 
 #ifdef DEBUG_LOG_CRYPTO
 			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
-			dumpBuff2Hex("MMDS IM DATA ENCRYPTED ", (unsigned char*)odata, ciphertext_len);
+			dumpBuff2Hex("IM DATA ENCRYPTED ", (unsigned char*)odata, ciphertext_len);
 #endif //DEBUG_LOG_CRYPTO
 		}
 		ret = ciphertext_len;
@@ -803,27 +730,6 @@ int JniCryptoAES::decryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
          */
 		if (mode == AES_OFB)
 		{
-#ifdef AES_USE_DIRECT_AES
-			aes_init();
-			aes_encrypt_ctx cx[1];
-			aes_encrypt_key((const unsigned char*)key, keyLen, cx);
-
-			unsigned char* p = (unsigned char *)odata;
-			int outlen = 16;
-			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
-			LOG_TRACE_CRYPTO("decrypt with OFB, gladman, loop time %d data size %d", loop, size);
-			for(int i = 0; (i < loop) && (((int)p - (int)odata) < maxSize - 16); i++) {
-				aes_ofb_decrypt((const unsigned char*)data, p, outlen, (unsigned char*)iv, cx);
-				p += outlen;
-			}
-
-			ciphertext_len = (int)p - (int)odata;
-#ifdef DEBUG_LOG_CRYPTO
-			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
-			dumpBuff2Hex("decrypt data ", (unsigned char*)odata, ciphertext_len/2);
-#endif //DEBUG_LOG_CRYPTO
-
-#else //AES_USE_DIRECT_AES
 			unsigned char* p = (unsigned char *)odata;
             int outlen = 0;
 			int loop = (int)(((float)maxSize/(float)size) + 0.5f);
@@ -853,7 +759,6 @@ int JniCryptoAES::decryptIM(char* iv, int ivLen, char* key, int keyLen, char* da
 			LOG_TRACE_CRYPTO("out len %d", ciphertext_len);
 			dumpBuff2Hex("encrypt data ", (unsigned char*)odata, ciphertext_len/2);
 #endif //DEBUG_LOG_CRYPTO
-#endif //AES_USE_DIRECT_AES
 		}
 		else if (mode == AES_CFB_8) {
 			unsigned char* p = (unsigned char *)odata;
